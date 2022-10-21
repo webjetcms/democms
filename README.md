@@ -1,6 +1,8 @@
-# WebJET CMS
+# WebJET CMS - demo
 
-Základný projekt pre WebJET CMS. Požiadajte InterWay o prístup k WebJET Maven repozitáru, premenujte súbor ```gradle.sample.properties``` na ```gradle.properties``` a nastavte v ňom prihlasovacie údaje.
+Ukážkový (demo) projekt vo WebJET CMS, obsahuje integrované ukážkové šablóny [bare](https://github.com/webjetcms/templates-bare), [creative](https://github.com/webjetcms/templates-creative) a zálohu MariaDB databázy pre jednoduchšie spustenie. Vychádza z [basecms](https://github.com/webjetcms/basecms) projektu.
+
+Pre spustenie požiadajte InterWay o prístup k WebJET Maven repozitáru, premenujte súbor ```gradle.sample.properties``` na ```gradle.properties``` a nastavte v ňom prihlasovacie údaje.
 
 Pre priame otvorenie vo VS Code ešte premenujte súbor ```.settings/default-org.eclipse.buildship.core.prefs``` na ```org.eclipse.buildship.core.prefs```. Ak vám VS Code zobrazuje chybu v projekte kliknite na menu ```View/Command Palette``` a do okna zadajte: ```Java: Clean Java Language Server Workspace```. To vyvolá reštart VS Code a znova inicializovanie Java prostredia. Po reštarte by vám projekt nemal zobrazovať žiaden červený priečinok/chybu.
 
@@ -28,11 +30,15 @@ Vo vašom IDE môžu byť potrebné ďalšie kroky pre aktualizáciu knižníc t
 gradlew dependencies --configuration default
 ```
 
-**Tomcat**
+**Spustenie aplikačného servera**
+
+V projekte je integrovaný aplikačný server Tomcat, celý projekt spustíte príkazom:
+
 ```
 gradlew appRun
-gradlew appStop
 ```
+
+a následne otvoríte ```http://localhost``` v prehliadači.
 
 **Vytvorenie distribučného WAR archívu**
 ```

@@ -52,6 +52,33 @@
                 "webpack:///../*": "${webRoot}/src/js/*",         // unsure how/why webpack generates ../links.js
                 "webpack:///*":     "*"                           // a default, catch everything else
             }
+        },
+        {
+            "trace": true,
+            "name": "Launch Chrome Bare",
+            "request": "launch",
+            "type": "chrome",
+            "url": "http://iwcm.interway.sk/showdoc.do?docid=51&NO_WJTOOLBAR=true",
+            "webRoot": "${workspaceRoot}/src/main/webapp/",
+            "sourceMaps": true,
+            "disableNetworkCache": true,
+            "sourceMapPathOverrides": {
+                "src/js/ninja.js": "${webRoot}/templates/bare/bootstrap-bare/src/js/ninja.js",
+                "src/js/global-functions.js": "${webRoot}/templates/bare/bootstrap-bare/src/js/global-functions.js",
+            }
+        },
+        {
+            "trace": true,
+            "name": "Launch Chrome Creative",
+            "request": "launch",
+            "type": "chrome",
+            "url": "http://iwcm.interway.sk/showdoc.do?docid=42&NO_WJTOOLBAR=true",
+            "webRoot": "${workspaceRoot}/src/main/webapp/",
+            "sourceMaps": true,
+            "disableNetworkCache": true,
+            "sourceMapPathOverrides": {
+                "src/js/*": "${webRoot}/templates/creative/bootstrap-creative/src/js/*",
+            }
         }
     ]
 }

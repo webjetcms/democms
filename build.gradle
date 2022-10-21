@@ -214,6 +214,40 @@ gretty {
         '-Dwebjet.smtpServer=smtp.interway.sk',
         "-DwebjetDbname=${System.env.webjetDbname}",
         //zoznam docid ktore je mozne priamo otvorit bez prihlasenia pre Launch Chrome debug rezim
-        "-Dwebjet.showDocActionAllowedDocids=4,26"
+        "-Dwebjet.showDocActionAllowedDocids=26,42,51"
     ]
 }
+
+//Generovanie DIST suborov ukazkovych sablon
+
+//Bootstrap bare sablona:
+task bareTemplateInstallNpm(type: Exec){
+    workingDir "./src/main/webapp/templates/bare/bootstrap-bare"
+    commandLine project.ext.npm, 'install'
+}
+task bareTemplateBuildNpm(type: Exec, dependsOn: bareTemplateInstallNpm) {
+    workingDir "./src/main/webapp/templates/bare/bootstrap-bare"
+    commandLine project.ext.npm, 'run', 'build'
+}
+
+//Bootstrap creative sablona:
+task creativeTemplateInstallNpm(type: Exec){
+    workingDir "./src/main/webapp/templates/creative/bootstrap-creative"
+    commandLine project.ext.npm, 'install'
+}
+task creativeTemplateBuildNpm(type: Exec, dependsOn: creativeTemplateInstallNpm) {
+    workingDir "./src/main/webapp/templates/creative/bootstrap-creative"
+    commandLine project.ext.npm, 'run', 'build'
+}
+
+project.afterEvaluate {
+    tasks.appRun.dependsOn bareTemplateBuildNpm
+    tasks.appRun.dependsOn creativeTemplateBuildNpm
+    tasks.appStart.dependsOn bareTemplateBuildNpm
+    tasks.appStart.dependsOn creativeTemplateBuildNpm
+    tasks.appStartDebug.dependsOn bareTemplateBuildNpm
+    tasks.appStartDebug.dependsOn creativeTemplateBuildNpm
+}
+
+war.dependsOn bareTemplateBuildNpm
+war.dependsOn creativeTemplateBuildNpm
