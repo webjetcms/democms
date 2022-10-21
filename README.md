@@ -2,6 +2,8 @@
 
 Základný projekt pre WebJET CMS. Požiadajte InterWay o prístup k WebJET Maven repozitáru, premenujte súbor ```gradle.sample.properties``` na ```gradle.properties``` a nastavte v ňom prihlasovacie údaje.
 
+Pre priame otvorenie vo VS Code ešte premenujte súbor ```.settings/default-org.eclipse.buildship.core.prefs``` na ```org.eclipse.buildship.core.prefs```. Ak vám VS Code zobrazuje chybu v projekte kliknite na menu ```View/Command Palette``` a do okna zadajte: ```Java: Clean Java Language Server Workspace```. To vyvolá reštart VS Code a znova inicializovanie Java prostredia. Po reštarte by vám projekt nemal zobrazovať žiaden červený priečinok/chybu.
+
 ## Gradle príkazy
 
 Vždy používajte ```gradle wrapper``` použitím ```gradlew```, nikdy nepoužívajte priamo váš globálny ```gradle``` príkaz. Príkaz ```gradlew``` použije projektovú verziu gradle, nebude kolidovať verzia s vašou globálnou verziou.

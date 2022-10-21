@@ -1,0 +1,28 @@
+doctype html
+html(class="pg-homepage" data-th-lang="${ninja.temp.lngIso}" data-th-data-browser-name="${ninja.userAgent.browserName}" data-th-data-browser-version="${ninja.userAgent.browserVersion}" data-th-data-device-type="${ninja.userAgent.deviceType}" data-th-data-device-os="${ninja.userAgent.deviceOS}")
+
+    head
+        include includes/head.pug
+
+    body#page-top
+        //header
+        div(data-iwcm-write="doc_header")
+            include pagebuilder/section/header/menu
+
+        //content
+        div(data-iwcm-write="doc_data")
+            include pagebuilder/section/masthead/masthead
+            include pagebuilder/section/about/about
+            include pagebuilder/section/services/service
+            include pagebuilder/section/portfolio/portfolio
+            include pagebuilder/section/portfolio/cta
+            include pagebuilder/section/form/form
+            include pagebuilder/section/accordion/accordion
+            include pagebuilder/section/cards/cards
+            include pagebuilder/section/slider/hp-slider-section
+            include pagebuilder/section/tabs/tabs
+            include pagebuilder/section/form/form-with-text
+
+        //footer
+        div(data-iwcm-write="doc_footer")
+            include pagebuilder/section/footer/footer

@@ -1,0 +1,38 @@
+//
+// Styles
+//
+
+// Import custom variables and override default Bootstrap variables
+@import "variables";
+@import "./variables/variabiles.scss";
+
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap.scss";
+
+// Tools
+$fa-font-path: "/templates/creative/bootstrap-creative/dist/webfonts";
+@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '@fortawesome/fontawesome-free/scss/solid.scss';
+@import '@fortawesome/fontawesome-free/scss/brands.scss';
+@import '@fortawesome/fontawesome-free/scss/regular.scss';
+
+
+// Import custom styles
+@import "global";
+
+
+// Components
+@import "./components/buttons.scss";
+@import "./components/dividers.scss";
+@import "./components/navbar.scss";
+@import "./components/icons.scss";
+@import "./components/form.scss";
+
+// Sections
+@import "./sections/sections.scss";
+@import "./sections/masthead.scss";
+@import "./sections/portfolio.scss";
+@import "./sections/services.scss";
+
+// Views
+@import "./views/ninja-page-builder.scss";
