@@ -35,7 +35,9 @@ Aplikačný server spustíte príkazom:
 gradlew.bat appStart
 ```
 
-a následne otvoríte stránku ```http://localhost``` v prehliadači.
+Nebojte sa, ak príkaz ```appStart``` bude písať stále 92%, je spustený po výpise hlásenia ```INFO  Tomcat 9.0.52 started and listening on port 80```, server bude bežať kým ho cez klávesovú skratku ```ctrl+C``` nezastavíte.
+
+Po spustení servera otvoríte administráciu v prehliadači na adrese ```http://localhost/admin```.
 
 ## Integrované dizajnové šablóny
 
@@ -55,7 +57,7 @@ Viac informácií v dokumentácii k [Bare šablóne](http://docs.webjetcms.sk/v2
 
 Jednostránková šablóna vychádzajúca z Bare založená na [Start Bootstrap - Creative](https://startbootstrap.com/theme/creative) šablóne.
 
-Používanie/úprava súborov je podobná ako pri [Bare šablóne](http://docs.webjetcms.sk/v2022/#/frontend/examples/template-bare/README).
+Používanie/úprava súborov je podobná ako pri [Bare šablóne](http://docs.webjetcms.sk/v2022/#/frontend/examples/template-bare/README), obsahuje naviac [Font Awesome](https://fontawesome.com) integrovaný cez npm modul.
 
 ## Aktualizácia WebJETu
 
