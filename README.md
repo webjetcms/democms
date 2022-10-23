@@ -27,6 +27,12 @@ pričom nastavte namiesto hodnoty ```localhost``` adresu vášho MariaDB servera
 
 Zadané heslo a adresu servera nastavte v súbore ```src/main/resources/poolman.xml```.
 
+Licenčné číslo, ktoré ste dostali od InterWay zadáte do databázy nasledovným SQL príkazom:
+
+```sql
+UPDATE _conf_ SET value='XXX' WHERE name='license';
+```
+
 ## Spustenie servera
 
 Aplikačný server spustíte príkazom:
@@ -38,6 +44,8 @@ gradlew.bat appStart
 Nebojte sa, ak príkaz ```appStart``` bude písať stále 92%, je spustený po výpise hlásenia ```INFO  Tomcat 9.0.52 started and listening on port 80```, server bude bežať kým ho cez klávesovú skratku ```ctrl+C``` nezastavíte.
 
 Po spustení servera otvoríte administráciu v prehliadači na adrese ```http://localhost/admin```.
+
+Šablóny majú nastavené zrkadlenie štruktúry, ak chcete automaticky prekladať názvy stránok nastavte si [prekladač](http://docs.webjetcms.sk/v2022/#/admin/setup/translation).
 
 ## Integrované dizajnové šablóny
 
