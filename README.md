@@ -32,7 +32,7 @@ Zadané heslo a adresu servera nastavte v súbore ```src/main/resources/poolman.
 Aplikačný server spustíte príkazom:
 
 ```
-gradlew.bat appRun
+gradlew.bat appStart
 ```
 
 a následne otvoríte stránku ```http://localhost``` v prehliadači.
