@@ -7,7 +7,7 @@
         <dbname>iwcm</dbname>
         <jndiName>jndi-iwcm</jndiName>
         <driver>com.mysql.jdbc.Driver</driver>
-        <url>jdbc:mysql://mysql-devel.srv.iway.local/democms_web</url>
+        <url>jdbc:mysql://localhost/democms_web</url>
 
         <username>democms_web</username>
         <password>heslo</password>
