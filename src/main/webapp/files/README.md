@@ -1,0 +1,1 @@
+WebJET je nakonfigurovaný ako multi doménový. Súbory pre každú doménu sa ukladajú do ```static-files/vasa.domena.sk/files/```.
