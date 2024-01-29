@@ -86,4 +86,3 @@ Ak používate SNAPSHOT verziu, nasledovným príkazom vykonáte znova načítan
 ```
 gradlew.bat compileJava --refresh-dependencies --info
 ```
-
