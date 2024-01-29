@@ -1,61 +1,88 @@
-# WebJET CMS
+# WebJET CMS - demo
 
-Základný projekt pre WebJET CMS. Požiadajte InterWay o prístup k WebJET Maven repozitáru, premenujte súbor ```gradle.sample.properties``` na ```gradle.properties``` a nastavte v ňom prihlasovacie údaje.
+Ukážkový (demo) projekt vo WebJET CMS, obsahuje integrované ukážkové šablóny [bare](https://github.com/webjetcms/templates-bare), [creative](https://github.com/webjetcms/templates-creative) a zálohu MariaDB databázy pre jednoduchšie spustenie. Vychádza z [basecms](https://github.com/webjetcms/basecms) projektu.
 
-## Gradle príkazy
+Pre spustenie požiadajte InterWay o prístup k WebJET Maven repozitáru a k zálohe ukážkovej databázy. Premenujte súbor `gradle.sample.properties` na `gradle.properties` a nastavte v ňom prihlasovacie údaje k WebJET Maven repozitáru.
 
-Vždy používajte ```gradle wrapper``` použitím ```gradlew```, nikdy nepoužívajte priamo váš globálny ```gradle``` príkaz. Príkaz ```gradlew``` použije projektovú verziu gradle, nebude kolidovať verzia s vašou globálnou verziou.
+Pre priame otvorenie vo VS Code ešte premenujte súbor `.settings/default-org.eclipse.buildship.core.prefs` na `org.eclipse.buildship.core.prefs`. Ak vám VS Code zobrazuje chybu v projekte kliknite na menu `View/Command Palette` a do okna zadajte: `Java: Clean Java Language Server Workspace`. To vyvolá reštart VS Code a znova inicializovanie Java prostredia. Po reštarte by vám projekt nemal zobrazovať žiaden červený priečinok/chybu.
 
-Pridaním --info získate podrobnejšie informácie o behu príkazu
+## Obnovenie databázy
 
-**kompilácia projektu**
-```
-gradlew compileJava
-```
+Ukážková databáza je pre server MySQL/MariaDB, stiahnutý ZIP súbor zálohy databázy rozbaľte. Vytvorte novú databázovú schému nasledovným príkazom (samozrejme zmeňte hodnotu hesla):
 
-**kompilácia vrátane obnovenia knižníc (hlavne keď sa zmení SNAPSHOT verzia WJ)**
-
-```
-gradlew compileJava --refresh-dependencies --info
+```sql
+CREATE DATABASE democms_web DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
+CREATE USER democms_web IDENTIFIED BY 'heslo';
+GRANT ALL PRIVILEGES ON democms_web.* TO `democms_web`@`%`;
+FLUSH PRIVILEGES;
 ```
 
-Vo vašom IDE môžu byť potrebné ďalšie kroky pre aktualizáciu knižníc tak, aby zmenu videlo aj IDE. Napr. vo VS Code je potrebné daný gradle príkaz vykonať z Gradle konzoly (v ľavej lište je ikona Gradle). Otvorte v ```Tasks``` uzol ```other```, kliknite pravým na ```compileJava``` a zvoľte možnosť ```Run Task With Args```. Ako argumenty použite ```--refresh-dependencies --info```. Prípadne si rovno cez možnosť ```Pin Task With Args``` príkaz aj s argumentami uložte do vlastného zoznamu.
+a obnovte databázu príkazom:
 
-**Zoznam závislostí/použitých jar knižníc**
-```
-gradlew dependencies --configuration default
-```
-
-**Tomcat**
-```
-gradlew appRun
-gradlew appStop
+```sh
+mysql -u democms_web -p -h localhost democms_web < democms_web.sql
 ```
 
-**Vytvorenie distribučného WAR archívu**
-```
-gradlew war
+pričom nastavte namiesto hodnoty `localhost` adresu vášho MariaDB servera (ak nie je spustený lokálne).
+
+Zadané heslo a adresu servera nastavte v súbore `src/main/resources/poolman.xml`.
+
+Licenčné číslo, ktoré ste dostali od InterWay zadáte do databázy nasledovným SQL príkazom:
+
+```sql
+UPDATE _conf_ SET value='XXX' WHERE name='license';
 ```
 
-ak máte WebJET v starom formáte (s rozbalenou štruktúrou kde vidno /admin súbory, všetky komponenty v /components/ aj všetky Java triedy vo /WEB-INF/classes/) môžete použiť:
+## Spustenie servera
+
+Aplikačný server spustíte príkazom:
 
 ```
-gradlew updatezip
+gradlew.bat appStart
 ```
 
-ktorý pripraví aktualizačný ZIP súbor v starom formáte. Vo WebJETe nastavte konf. premennú ```updateAllowFileUpload``` na ```true``` a následne môžete použiť vygenerovaný ZIP
-balík pre aktualizáciu (cez Ovládací panel->Aktualizácia WebJETu->dole vybrať update.zip a uploadnúť).
+Nebojte sa, ak príkaz `appStart` bude písať stále 92%, je spustený po výpise hlásenia `INFO  Tomcat 9.0.52 started and listening on port 80`, server bude bežať kým ho cez klávesovú skratku `ctrl+C` nezastavíte.
+
+Po spustení servera otvoríte administráciu v prehliadači na adrese `http://localhost/admin`.
+
+Šablóny majú nastavené zrkadlenie štruktúry, ak chcete automaticky prekladať názvy stránok nastavte si [prekladač](http://docs.webjetcms.sk/v2022/#/admin/setup/translation).
+
+## Integrované dizajnové šablóny
+
+Tento projekt a záloha databázy obsahuje integráciu viacerých dizajnových šablón. Z nich môžete vychádzať pri tvorbe vášho projektu. Všetky sa nachádzajú v priečinku `src/main/webapp/templates`.
+
+### basecms
+
+Základná šablóna ešte v starom JSP formáte, je tu len na ukážku a pochopenie používania v starých projektoch. Nové projekty odporúčame založiť výlučne na [Thymeleaf šablónach](http://docs.webjetcms.sk/v2022/#/frontend/thymeleaf/README).
+
+### Bare
+
+Základná šablóna v Thymeleaf formáte s využitím Bootstrap a npm modulov. Odporúčame ju použiť ako východiskovú šablónu pre prípravu vašich dizajnov. Umožňuje ľahko prototypovať zmeny aj bez spusteného WebJETu s využitím príkazu `npm run start`.
+
+Viac informácií v dokumentácii k [Bare šablóne](http://docs.webjetcms.sk/v2022/#/frontend/examples/template-bare/README).
+
+### Creative
+
+Jednostránková šablóna vychádzajúca z Bare založená na [Start Bootstrap - Creative](https://startbootstrap.com/theme/creative) šablóne.
+
+Používanie/úprava súborov je podobná ako pri [Bare šablóne](http://docs.webjetcms.sk/v2022/#/frontend/examples/template-bare/README), obsahuje naviac [Font Awesome](https://fontawesome.com) integrovaný cez npm modul.
 
 ## Aktualizácia WebJETu
 
-V súbore [build.gradle](build.gradle) je sekcia ```ext``` v ktorej je nastavená verzia WebJET CMS použitá v projekte:
+V súbore [build.gradle](build.gradle) je sekcia `ext` v ktorej je nastavená verzia WebJET CMS použitá v projekte:
 
 ```javascript
 ext {
-    webjetVersion = "2023.0-SNAPSHOT";
+    webjetVersion = "2022.0-SNAPSHOT";
 }
 ```
 
-v ukážke je to verzia ```2023.0-SNAPSHOT```, pričom ```SNAPSHOT``` znamená, že sa jedná a najnovšiu verziu radu 2023. Najnovšia verzia môže vždy obsahovať rozpracovanú funkcionalitu, takže zvážte jej použitie podľa [zoznamu zmien](http://docs.webjetcms.sk/v2023/#/CHANGELOG).
+v ukážke je to verzia `2022.0-SNAPSHOT`, pričom `SNAPSHOT` znamená, že sa jedná a najnovšiu verziu radu 2022. Najnovšia verzia môže vždy obsahovať rozpracovanú funkcionalitu, takže zvážte jej použitie podľa [zoznamu zmien](http://docs.webjetcms.sk/v2022/#/CHANGELOG).
 
-Zoznam všetkých dostupných verzií nájdete na v dokumentácii v [sekcii inštalácia](http://docs.webjetcms.sk/v2023/#/install/README).
+Zoznam všetkých dostupných verzií nájdete na v dokumentácii v [sekcii inštalácia](http://docs.webjetcms.sk/v2022/#/install/README).
+
+Ak používate SNAPSHOT verziu, nasledovným príkazom vykonáte znova načítanie najnovšej verzie z Maven servera:
+
+```
+gradlew.bat compileJava --refresh-dependencies --info
+```

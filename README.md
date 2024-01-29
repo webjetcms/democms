@@ -1,87 +1,87 @@
 # WebJET CMS - demo
 
-Ukážkový (demo) projekt vo WebJET CMS, obsahuje integrované ukážkové šablóny [bare](https://github.com/webjetcms/templates-bare), [creative](https://github.com/webjetcms/templates-creative) a zálohu MariaDB databázy pre jednoduchšie spustenie. Vychádza z [basecms](https://github.com/webjetcms/basecms) projektu.
+Demo project in WebJET CMS, contains integrated demo templates [bare](https://github.com/webjetcms/templates-bare), [creative](https://github.com/webjetcms/templates-creative) and MariaDB database backup for easier startup. It is based on the [basecms](https://github.com/webjetcms/basecms) project.
 
-Pre spustenie požiadajte InterWay o prístup k WebJET Maven repozitáru a k zálohe ukážkovej databázy. Premenujte súbor ```gradle.sample.properties``` na ```gradle.properties``` a nastavte v ňom prihlasovacie údaje k WebJET Maven repozitáru.
+To get started, ask InterWay for access to the WebJET Maven repository and sample database backup. Rename the `gradle.sample.properties` file to `gradle.properties` and set the credentials for the WebJET Maven repository in it.
 
-Pre priame otvorenie vo VS Code ešte premenujte súbor ```.settings/default-org.eclipse.buildship.core.prefs``` na ```org.eclipse.buildship.core.prefs```. Ak vám VS Code zobrazuje chybu v projekte kliknite na menu ```View/Command Palette``` a do okna zadajte: ```Java: Clean Java Language Server Workspace```. To vyvolá reštart VS Code a znova inicializovanie Java prostredia. Po reštarte by vám projekt nemal zobrazovať žiaden červený priečinok/chybu.
+To open directly in VS Code, rename the file `.settings/default-org.eclipse.buildship.core.prefs` to `org.eclipse.buildship.core.prefs`. If VS Code shows you an error in the project, click on the `View/Command Palette` menu and enter: `Java: Clean Java Language Server Workspace` in the window. This will cause VS Code to restart and re-initialize the Java environment. After restarting, the project should not show you any red folder/error.
 
-## Obnovenie databázy
+## Restoring the database
 
-Ukážková databáza je pre server MySQL/MariaDB, stiahnutý ZIP súbor zálohy databázy rozbaľte. Vytvorte novú databázovú schému nasledovným príkazom (samozrejme zmeňte hodnotu hesla):
+The sample database is for the MySQL/MariaDB server, unzip the downloaded database backup ZIP file. Create a new database schema with the following command (change the password value of course):
 
 ```sql
 CREATE DATABASE democms_web DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
-CREATE USER democms_web IDENTIFIED BY 'heslo';
+CREATE USER democms_web IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON democms_web.* TO `democms_web`@`%`;
 FLUSH PRIVILEGES;
 ```
 
-a obnovte databázu príkazom:
+and refresh the database with the command:
 
 ```sh
 mysql -u democms_web -p -h localhost democms_web < democms_web.sql
 ```
 
-pričom nastavte namiesto hodnoty ```localhost``` adresu vášho MariaDB servera (ak nie je spustený lokálne).
+while setting instead `localhost` the address of your MariaDB server (if it is not running locally).
 
-Zadané heslo a adresu servera nastavte v súbore ```src/main/resources/poolman.xml```.
+Set the entered password and server address in the `src/main/resources/poolman.xml` file.
 
-Licenčné číslo, ktoré ste dostali od InterWay zadáte do databázy nasledovným SQL príkazom:
+Enter the license number you received from InterWay into the database with the following SQL command:
 
 ```sql
 UPDATE _conf_ SET value='XXX' WHERE name='license';
 ```
 
-## Spustenie servera
+## Starting the server
 
-Aplikačný server spustíte príkazom:
+You start the application server with the command:
 
 ```
 gradlew.bat appStart
 ```
 
-Nebojte sa, ak príkaz ```appStart``` bude písať stále 92%, je spustený po výpise hlásenia ```INFO  Tomcat 9.0.52 started and listening on port 80```, server bude bežať kým ho cez klávesovú skratku ```ctrl+C``` nezastavíte.
+Don't worry, if the `appStart` command keeps writing 92%, it is started after the `INFO Tomcat 9.0.52 started and listening on port 80` message is displayed, the server will run until you stop it via the `ctrl+C` keyboard shortcut.
 
-Po spustení servera otvoríte administráciu v prehliadači na adrese ```http://localhost/admin```.
+After starting the server, open the administration in the browser at the address `http://localhost/admin`.
 
-Šablóny majú nastavené zrkadlenie štruktúry, ak chcete automaticky prekladať názvy stránok nastavte si [prekladač](http://docs.webjetcms.sk/v2022/#/admin/setup/translation).
+The templates have the mirroring of the structure set, if you want to automatically translate page names, set up [translator](http://docs.webjetcms.sk/v2022/#/admin/setup/translation).
 
-## Integrované dizajnové šablóny
+## Integrated design templates
 
-Tento projekt a záloha databázy obsahuje integráciu viacerých dizajnových šablón. Z nich môžete vychádzať pri tvorbe vášho projektu. Všetky sa nachádzajú v priečinku ```src/main/webapp/templates```.
+This project and database backup contains the integration of multiple design templates. You can base your project on them. They are all located in the `src/main/webapp/templates` folder.
 
 ### basecms
 
-Základná šablóna ešte v starom JSP formáte, je tu len na ukážku a pochopenie používania v starých projektoch. Nové projekty odporúčame založiť výlučne na [Thymeleaf šablónach](http://docs.webjetcms.sk/v2022/#/frontend/thymeleaf/README).
+The basic template is still in the old JSP format, it is here only for demonstration and understanding of use in old projects. We recommend basing new projects exclusively on [Thymeleaf templates](http://docs.webjetcms.sk/v2022/#/frontend/thymeleaf/README).
 
 ### Bare
 
-Základná šablóna v Thymeleaf formáte s využitím Bootstrap a npm modulov. Odporúčame ju použiť ako východiskovú šablónu pre prípravu vašich dizajnov. Umožňuje ľahko prototypovať zmeny aj bez spusteného WebJETu s využitím príkazu ```npm run start```.
+Basic template in Thymeleaf format using Bootstrap and npm modules. We recommend using it as a starting template for preparing your designs. It allows you to easily prototype changes even without running WebJET using the `npm run start` command.
 
-Viac informácií v dokumentácii k [Bare šablóne](http://docs.webjetcms.sk/v2022/#/frontend/examples/template-bare/README).
+More information in the [Bare template] documentation(http://docs.webjetcms.sk/v2022/#/frontend/examples/template-bare/README).
 
 ### Creative
 
-Jednostránková šablóna vychádzajúca z Bare založená na [Start Bootstrap - Creative](https://startbootstrap.com/theme/creative) šablóne.
+A single page template based on Bare based on the [Start Bootstrap - Creative](https://startbootstrap.com/theme/creative) template.
 
-Používanie/úprava súborov je podobná ako pri [Bare šablóne](http://docs.webjetcms.sk/v2022/#/frontend/examples/template-bare/README), obsahuje naviac [Font Awesome](https://fontawesome.com) integrovaný cez npm modul.
+Using/editing files is similar to [Bare template](http://docs.webjetcms.sk/v2022/#/frontend/examples/template-bare/README), it also includes [Font Awesome](https://fontawesome .com) integrated through the npm module.
 
-## Aktualizácia WebJETu
+## WebJET update
 
-V súbore [build.gradle](build.gradle) je sekcia ```ext``` v ktorej je nastavená verzia WebJET CMS použitá v projekte:
+In the file [build.gradle](build.gradle) there is an `ext` section in which the version of WebJET CMS used in the project is set:
 
 ```javascript
 ext {
-    webjetVersion = "2022.0-SNAPSHOT";
+     webjetVersion = "2022.0-SNAPSHOT";
 }
 ```
 
-v ukážke je to verzia ```2022.0-SNAPSHOT```, pričom ```SNAPSHOT``` znamená, že sa jedná a najnovšiu verziu radu 2022. Najnovšia verzia môže vždy obsahovať rozpracovanú funkcionalitu, takže zvážte jej použitie podľa [zoznamu zmien](http://docs.webjetcms.sk/v2022/#/CHANGELOG).
+in the preview it's version `2022.0-SNAPSHOT`, where `SNAPSHOT` means the latest version of the 2022 series. The latest version may always contain work in progress, so consider using it according to [changelist](http://docs. webjetcms.sk/v2022/#/CHANGELOG).
 
-Zoznam všetkých dostupných verzií nájdete na v dokumentácii v [sekcii inštalácia](http://docs.webjetcms.sk/v2022/#/install/README).
+You can find a list of all available versions in the documentation in the [installation section](http://docs.webjetcms.sk/v2022/#/install/README).
 
-Ak používate SNAPSHOT verziu, nasledovným príkazom vykonáte znova načítanie najnovšej verzie z Maven servera:
+If you are using the SNAPSHOT version, use the following command to reload the latest version from the Maven server:
 
 ```
 gradlew.bat compileJava --refresh-dependencies --info
